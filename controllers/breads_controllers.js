@@ -12,12 +12,19 @@ breads_router.get('/:arrayIndex', (req,res) => {
     //res.send(Bread[req.params.arrayIndex])
     if (Bread[req.params.arrayIndex]){
         res.render('show', {
-        bread: Bread[req.params.arrayIndex]
+          bread: Bread[req.params.arrayIndex],
+          index: req.params.arrayIndex,
         })
     } else {
         res.send('this index does not exit -> 404')
     }
     
+})
+
+//Delete
+breads_router.delete('/:arrayIndex',(req,res) => {
+  Bread.splice(req.params.indexArray, 1)
+  res.status(303).redirect('/breads')
 })
 
 // INDEX
