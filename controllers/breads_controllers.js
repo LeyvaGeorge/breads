@@ -45,24 +45,27 @@ breads_router.delete('/:arrayIndex',(req,res) => {
 
 // INDEX
 breads_router.get('/', (req, res) => {
-    res.render('Index', {
-        breads: Bread,
+    Bread.find()
+    .then(foundBreads => {
+      res.render('index', {
+        breads: foundBreads,
         title: 'Index Page'
+      })
     })
-  //res.send(Bread)
+
 })
 
   // CREATE
 breads_router.post('/', (req, res) => {
     if (!req.body.image) {
-      req.body.image = 'https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'
+      req.body.image = undefined
     }
     if(req.body.hasGluten === 'on') {
       req.body.hasGluten = true
     } else {
       req.body.hasGluten = false
     }
-    Bread.push(req.body)
+    Bread.create(req.body)
     res.redirect('/breads')
   }) 
 
