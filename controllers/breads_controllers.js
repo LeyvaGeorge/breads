@@ -2,18 +2,20 @@ const express = require('express')
 const breads_router = express.Router()
 const Bread = require('../models/bread.js')
 
+
 //NEW
 breads_router.get('/new', (req,res) => {
     res.render('new')
 })
 
-//Edit
+//EDIT
 breads_router.get('/:arrayIndex/edit', (req, res) => {
   res.render('edit', {
     bread: Bread[req.params.arrayIndex],
     index: req.params.arrayIndex,
   })
 })
+
 //SHOW
 breads_router.get('/:arrayIndex', (req, res) => {
     //res.send(Bread[req.params.arrayIndex])
@@ -25,7 +27,6 @@ breads_router.get('/:arrayIndex', (req, res) => {
     } else {
         res.send('this index does not exit -> 404')
     }
-    
 })
 
 //update
@@ -63,7 +64,6 @@ breads_router.post('/', (req, res) => {
     }
     Bread.push(req.body)
     res.redirect('/breads')
-  })
-  
+  }) 
 
 module.exports = breads_router
