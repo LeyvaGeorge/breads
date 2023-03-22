@@ -17,16 +17,17 @@ breads_router.get('/:arrayIndex/edit', (req, res) => {
 })
 
 //SHOW
-breads_router.get('/:arrayIndex', (req, res) => {
-    //res.send(Bread[req.params.arrayIndex])
-    if (Bread[req.params.arrayIndex]){
+breads_router.get('/:id', (req, res) => {
+  console.log(req.params.id)
+    Bread.findById(req.params.id)
+      .then(foundBread => {
         res.render('show', {
-          bread: Bread[req.params.arrayIndex],
-          index: req.params.arrayIndex,
+          bread: foundBread
         })
-    } else {
-        res.send('this index does not exit -> 404')
-    }
+      })
+      .catch(err => {
+        res.send('404')
+      })
 })
 
 //update
