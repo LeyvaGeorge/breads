@@ -9,11 +9,13 @@ breads_router.get('/new', (req,res) => {
 })
 
 //EDIT
-breads_router.get('/:arrayIndex/edit', (req, res) => {
-  res.render('edit', {
-    bread: Bread[req.params.arrayIndex],
-    index: req.params.arrayIndex,
-  })
+breads_router.get('/:id/edit', (req, res) => {
+  Bread.findById(req.params.id)
+    .then(foundBread => {
+      res.render('edit',{
+        bread:foundBread
+      })
+    })
 })
 
 //SHOW
@@ -21,6 +23,7 @@ breads_router.get('/:id', (req, res) => {
   console.log(req.params.id)
     Bread.findById(req.params.id)
       .then(foundBread => {
+        console.log(foundBread)
         res.render('show', {
           bread: foundBread
         })
@@ -32,16 +35,23 @@ breads_router.get('/:id', (req, res) => {
 
 //update
 breads_router.put('/:arrayIndex', (req, res) => {
+  // if else
   req.body.hasGluten = req.body.hasGluten === 'on'
-  Bread[req.params.arrayIndex] = req.body
-  res.redirect(`/breads/${req.params.arrayIndex}`)
+  Bread.findByIdAndUpdate(req.params.id,req.body, {new: true})
+    .then(updatedBread => {
+      console.log(updatedBread)
+      res.redirect(`/breads/${req.params.id}`)
+    })
 })
 
 
 //Delete
 breads_router.delete('/:arrayIndex',(req,res) => {
-  Bread.splice(req.params.indexArray, 1)
-  res.status(303).redirect('/breads')
+  Bread.findByIdAndDelete(req.params.arrayIndex)
+  
+    .then(deletedBread => {
+      res.status(303).redirect('/breads')
+    })
 })
 
 // INDEX
