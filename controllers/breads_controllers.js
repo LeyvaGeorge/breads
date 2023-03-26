@@ -3,7 +3,7 @@ const bread = require('../models/bread.js')
 //const bread_seed = require('../models/bread_seed')
 const breads_router = express.Router()
 const bread_schema = require('../models/bread.js')
-
+const baker_schema = require('../models/baker')
 // {
 //   //SEED
 // breads_router.get('/data/seed', (req,res) => {
@@ -21,7 +21,11 @@ const bread_schema = require('../models/bread.js')
 
 //NEW
 breads_router.get('/new', (req,res) => {
-    res.render('new')
+    baker_schema.find()
+      .then((foundbakers) => {
+        res.render('new', {foundbakers})
+      })
+      
 })
 
 //EDIT
