@@ -73,16 +73,20 @@ breads_router.delete('/:id', (req, res) => {
 
 // Index
 breads_router.get('/', (req, res) => {
-    bread_schema.find()
-        .then((foundBreads) => {
-            res.render('index', {
-                breads: foundBreads,
-                title: 'Index'
-            })
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+    baker_schema.find()
+        .then((foundBakers) => {
+            bread_schema.find()
+                .then((foundBreads) => {
+                    res.render('index', {
+                        breads: foundBreads,
+                        bakers: foundBakers,
+                        title: 'Index'
+                    })
+                })
+                .catch((err) => {
+                    console.log(err)
+                })  
+        }) 
 })
 
 // Create
