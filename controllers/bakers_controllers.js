@@ -10,18 +10,24 @@ bakers_router.get('/data/seed', (req,res) => {
     .catch((err) => {console.log(err)})
 })
 
-bakers_router.get('data/destor', (req,res) => {
-    baker_schema.deleteMany()
-    .then(() => res)
-})
-
 bakers_router.get('/:id', (req, res) => {
     baker_schema.findById(req.params.id)
-        .populate('breads')
+        .populate({
+            path: 'breads',
+            options: {limit:2},
+        })
         .then((foundBaker) => { 
             res.render('baker_show', { baker: foundBaker }) 
         })
         .catch((err) => { console.log(err) })
+})
+
+bakers_router.delete('/id',(req,res) => {
+    baker_schema.findByIdAndDelete(req.params.id)
+        .then((deletedBaker) => {
+            res.status(303).redirect('/breads')
+        })
+        .catch((err) => { console.log(err)})
 })
 
 bakers_router.get('/', (req,res) => {

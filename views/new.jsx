@@ -9,10 +9,10 @@ function New ({bakers}) {
         <form action = "/breads" method = "POST">
           <label htmlFor="name">Name</label>
           <input type="text" name="name" id="name" required/>
-
+          <br></br>
           <label htmlFor="image">Image</label>
           <input type="text" name="image" id="image"/>
-
+          <br></br>
           <label htmlFor="baker">Baker</label>
           <select name="baker" id="baker">
             {
@@ -25,7 +25,7 @@ function New ({bakers}) {
          
             
           </select>
-
+          <br></br>
           <label htmlFor="hasGluten">Has Gluten?</label>
 
           <input type="checkbox" name="hasGluten" id="hasGluten" defaultChecked/>

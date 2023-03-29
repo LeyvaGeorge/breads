@@ -18,6 +18,14 @@ baker_schema.virtual('breads', {
     foreignField: 'baker',
 
 })
+baker_schema.post('findOneAndDelete' , function () {
+    bread.deleteMany({baker: this._conditions._id})
+        .then((deleteStatus) => {
+            console.log(deleteStatus)
+        })
+        .catch((err)=>{console.log(err)})
+})
+
 // model and export 
 const baker = mongoose.model('baker_schema', baker_schema)
 module.exports = baker

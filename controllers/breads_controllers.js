@@ -72,21 +72,16 @@ breads_router.delete('/:id', (req, res) => {
 })
 
 // Index
-breads_router.get('/', (req, res) => {
-    baker_schema.find()
-        .then((foundBakers) => {
-            bread_schema.find()
-                .then((foundBreads) => {
-                    res.render('index', {
-                        breads: foundBreads,
-                        bakers: foundBakers,
-                        title: 'Index'
-                    })
-                })
-                .catch((err) => {
-                    console.log(err)
-                })  
-        }) 
+breads_router.get('/', async (req, res) => {
+    let foundBakers = await baker_schema.find().lean()
+    let foundBreads = await bread_schema.find().limit(2).lean()
+    
+    res.render('index', {
+        breads: foundBreads,
+        bakers: foundBakers,
+        title: 'Index Page'
+    })
+
 })
 
 // Create
